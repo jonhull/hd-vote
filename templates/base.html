@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Hacker Dojo Member Vote</title>
+        {% block feed %}
+            <link rel="alternate" type="application/xml" title="Hacker Dojo Member" href="/events.rss" />
+        {% endblock %}
+
+	</head>
+	<body>
+		<div id="top">
+			{% if user %}
+			<span><strong>{{user.email}}</strong> | <a href="/myvotes">My Votes</a> | <a href="{{logout_url}}">Logout</a></span>
+			{% else %}
+			<span><a style="font-weight: bold;" href="{{login_url}}">Login</a> | <a href="http://signup.hackerdojo.com/upgrade/needaccount">Need an account?</a></span>
+			{% endif %}
+		</div>
+		<div id="wrapper">
+			<div id="header">
+				<img src="/static/dojo_icon.png" style="float: left;" />
+				<h1>Member Vote</h1>
+			</div>
+			<div id="content">
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+
+	</body>
+</html>

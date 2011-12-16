@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="primary">
+
+	{% if issue.member_is_creator %}
+    	This issue is currently private.  You may share it by copy and pasting the following url into an email: <b>{{issueUrl}}</b>
+    	{% if issue.is_active %}
+			<form method="get" action="/edit/{{issue.key.id}}"><input type = "submit" value="edit"/></form>
+			<form method="post">
+				<input type = "submit" value="stop voting early"/>(coming soon)
+			</form>
+    	{% endif %}
+    {% endif %}
+    
+    <h3>{{issue.title|title}}</h3>
+    
+    <div>{{issue.description}}</div>
+    </br>
+    
+    {% if issue.is_active %}
+    	{% if vote %}Your current vote is <b>{{vote.choice.name}}</b>{% endif %}
+    	<form method="post">
+    		{% for choice in issue.choices %}
+    			<input type = "radio" name="choice" value="{{choice.key.id}}" {% if choice.is_member_vote %} checked {% endif %} /> {{choice.name}}</br>
+    		{% endfor %}
+    		{% if vote %}
+    			<input type = "submit" value="Change Vote"/>
+    		{% else %}
+    			<input type = "submit" value="Vote!"/>
+    		{% endif %}
+		</form>    	
+    	{% if issue.vote_count %}
+	    	{{issue.vote_count}} members have voted on this issue so far.
+    		{% if issue.days_left %}
+    			<b>{{issue.days_left}} days {{issue.hours_left}} hours</b> remaining before the vote closes.
+    		{% else %}
+    			{% if issue.hours_left %}
+    				<b>{{issue.hours_left}} hours</b> remaining before the vote closes.
+    			{% else %}
+    				<b>Less than an hour</b> remaining before the vote closes.
+    			{% endif %}
+    		{% endif %}
+    	{% else %}
+    		No one has voted on this issue yet. you can be the first! Vote will last <b>{{issue.duration}} hours</b> after the first vote
+    	{% endif %}
+    	
+    {% else %}
+    	{% if issue.has_results %}
+    		<h3>Results:</h3>
+			{% for choice in issue.choices %}
+				{% if choice.is_winning %}
+					<b>{{choice.name}}: {{choice.vote_count}} votes ({{choice.percentage}}%)</b> </br>
+				{% else %}
+					{{choice.name}}: {{choice.vote_count}} votes ({{choice.percentage}}%) </br>
+				{% endif %}
+			{% endfor %}
+			</br>Total: {{issue.vote_count}} votes </br>
+			
+			</br>Voting Members:</br>
+			{% for vote in issue.votes %}
+				<div>{{vote.member.nickname}}</div>
+			{% endfor %}
+    	{% endif %}
+    {% endif %}
+    
+    
+</div>
+
+
+{% endblock %}

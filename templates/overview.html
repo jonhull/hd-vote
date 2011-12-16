@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="/new" method="get">
+	<div><input type="submit" value="New Issue"></div>
+</form>
+
+{% if success_msg %}
+	<div class="success_msg"><b>{{success_msg}}</b></div>
+{% endif %}
+
+<h3>Current Issues</h3>
+{% if user %}
+	{% for issue in issues %}
+		<a href="/issue/{{issue.key.id}}">{{issue.title}}</a></br>
+	{% endfor %}
+{% else %}
+	<b>You must log in to vote</b>
+{% endif %}
+
+<h3>Recent Results</h3>
+{% for issue in recent_results %}
+	<a href="/issue/{{issue.key.id}}">{{issue.title}}</a></br>
+{% endfor %}
+
+<h3>Recent Votes</h3>
+{% for issue in recent_voted %}
+	<a href="/issue/{{issue.key.id}}">{{issue.title}}</a></br>
+{% endfor %}
+
+{% if user %}
+	<h3>My Issues</h3>
+	{% if created_by %}
+		{% for issue in created_by %}
+			<a href="/issue/{{issue.key.id}}">{{issue.title}}</a></br>
+		{% endfor %}
+	{% else %}
+		You have not created any issues yet
+	{% endif %}
+{% endif %}
+
+{% endblock %}

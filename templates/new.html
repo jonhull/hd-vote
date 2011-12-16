@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>New Issue</h1>
+
+<form method="post">
+	Issue Title:
+	<div><input type="text" name="title" size="60"/></div>
+	Issue:
+	<div><textarea name="description" rows="5" cols="44"/></textarea></div>
+	Options:
+	<div><input type="text" name="option1" size="60" value="{{option_one}}"/></div>
+	<div><input type="text" name="option2" size="60" value="{{option_two}}"/></div>
+	<div><input type="text" name="option3" size="60"/></div>
+	<div><input type="text" name="option4" size="60"/></div>
+	<div><input type="text" name="option5" size="60"/></div>
+	<div><input type="checkbox" name="allow_add"/>Allow members to add choices (coming soon)</div>
+	Duration:
+	<div><select name="duration_amount">
+			<option value="1">1</option>
+			<option value="2">2</option>
+        	<option value="3">3</option>
+        	<option value="4">4</option>
+        	<option value="5">5</option>
+        	<option value="6">6</option>
+        	<option value="7">7</option>
+        	<option value="8">8</option>
+        	<option value="9">9</option>
+        	<option value="10">10</option>
+        	<option value="11">11</option>
+        	<option value="12">12</option>
+        </select>
+        <select name="duration_multiplier">
+        	<option value="1">hour(s)</option>
+        	<option value="24" selected>day(s)</option>
+        	<option value="168">week(s)</option>
+        </select>
+        from
+        <select name="duration_start">
+        	<option>the first vote</option>
+        </select>
+	</div>
+	Visibility: (coming soon)
+	<div><select>
+        	<option selected>Private (email link only)</option>
+        	<option>All members</option>
+        	<optgroup label="Member Group">
+        		<option>Events</option>
+        		<option>Operations</option>
+        		<option>Other team</option>
+        	</optgroup>
+        	<optgroup label="Private Group">
+        		<option>Directors</option>
+        		<option>Other Private Group</option>
+        	</optgroup>
+        </select>
+    </div>
+	</br>
+	<div><input type="submit" value="Create Issue"></div>
+</form>
+
+{% endblock %}
